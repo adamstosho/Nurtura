@@ -24,7 +24,11 @@ const app = express();
 
 // Security & middleware
 app.use(helmet());
-app.use(cors());
+app.use(cors({
+  origin: "https://nurtura-hazel.vercel.app/",
+  credentials: true
+}));
+
 app.use(morgan('dev'));
 app.use(express.json());
 
@@ -57,7 +61,7 @@ app.use(errorHandler);
 
 // MongoDB connection
 const PORT = process.env.PORT || 5000;
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/healthpulse';
+const MONGODB_URI = process.env.MONGODB_URI;
 
 mongoose.connect(MONGODB_URI, {
   useNewUrlParser: true,
