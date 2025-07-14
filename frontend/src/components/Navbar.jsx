@@ -43,7 +43,7 @@ const Navbar = () => {
             <Link
               key={item.name}
               to={item.href}
-              className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-colors font-medium text-base
+              className={`no-underline flex items-center gap-2 px-3 py-2 rounded-lg transition-colors font-medium text-base
                 ${isActive(item.href)
                   ? "bg-primary text-white shadow-sm"
                   : "text-gray-700 hover:bg-surface hover:text-primary"}
@@ -76,7 +76,7 @@ const Navbar = () => {
             <Link
               key={item.name}
               to={item.href}
-              className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-colors font-medium text-base
+              className={`no-underline flex items-center gap-2 px-3 py-2 rounded-lg transition-colors font-medium text-base
                 ${isActive(item.href)
                   ? "bg-primary text-white shadow-sm"
                   : "text-gray-700 hover:bg-surface hover:text-primary"}
