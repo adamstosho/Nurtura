@@ -24,9 +24,10 @@ const app = express();
 
 // Security & middleware
 app.use(helmet());
+
 app.use(cors({
   origin: "https://nurtura-hazel.vercel.app",
-  credentials: true
+  credentials: false
 }));
 
 app.use(morgan('dev'));
