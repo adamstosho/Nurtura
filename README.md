@@ -67,7 +67,53 @@ Many people struggle to keep track of their health symptoms, find reliable clini
 6. Open your browser and go to `http://localhost:3000` to use the app.
 
 
-## Preview of the App (Screenshot)
+## **Preview of the App (Screenshot)**
+
+
+![screenshot](/frontend/public/screenshot/screencapture-localhost-3000-login-2025-07-14-17_48_51.png)
+
+**Login page**
+
+![screenshot](/frontend/public/screenshot/screencapture-localhost-3000-register-2025-07-14-17_49_09.png)
+
+**Registration page**
+
+
+![screenshot](/frontend/public/screenshot/screencapture-localhost-3000-2025-07-14-17_49_42.png)
+
+This is the user **dashboard**
+
+![screenshot](/frontend/public/screenshot/screencapture-localhost-3000-symptoms-history-2025-07-14-17_51_45.png)
+
+This is the **history page**, this handles the history of symptoms logged with its statistics
+
+
+![screenshot](/frontend/public/screenshot/screencapture-localhost-3000-tips-2025-07-14-17_52_08.png)
+
+This page shows the **health tips**, this is shown daily and will be replaced by another batch in the next day, this is actually handled with third-party API
+
+![screenshot](/frontend/public/screenshot/screencapture-localhost-3000-clinics-2025-07-14-17_53_11.png)
+
+This is the find **clinic page**
+
+![screenshot](/frontend/public/screenshot/screencapture-google-maps-dir-6-6642782-3-188018-6-5177-3-3538-6-6376331-3-2163108-11-84z-data-4m4-4m3-1m1-4e1-1m0-2025-07-14-17_54_51.png)
+
+This is the **map showing the direction to the nearest clinic(hospital)**
+
+![screenshot](/frontend/public/screenshot/screencapture-localhost-3000-emergency-2025-07-14-17_55_27.png)
+
+This is the page to locate the emergency contacts
+
+![screenshot](/frontend/public/screenshot/screencapture-localhost-3000-emergency-2025-07-14-17_55_44.png)
+
+This modal is where one can add **emergency contacts**
+
+![screenshot](/frontend/public/screenshot/screencapture-localhost-3000-emergency-2025-07-14-17_55_56.png)
+
+This modal is where the **emergency contacts** can be edited
+
+
+
 
 
 ## License
