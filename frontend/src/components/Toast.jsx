@@ -20,23 +20,23 @@ const Toast = () => {
   const getStyles = (type) => {
     switch (type) {
       case "success":
-        return "bg-green-50 border-green-200"
+        return "bg-secondary-light/30 border-secondary shadow-card text-secondary-dark";
       case "error":
-        return "bg-red-50 border-red-200"
+        return "bg-error/10 border-error shadow-card text-error";
       default:
-        return "bg-blue-50 border-blue-200"
+        return "bg-primary-light/20 border-primary shadow-card text-primary-dark";
     }
-  }
+  };
 
   return (
-    <div className="fixed top-20 right-4 z-50 space-y-2">
+    <div className="fixed top-24 right-4 z-50 space-y-3">
       {toasts.map((toast) => (
         <div
           key={toast.id}
-          className={`flex items-center p-4 rounded-lg border shadow-lg max-w-sm ${getStyles(toast.type)}`}
+          className={`flex items-center p-4 rounded-xl border max-w-sm min-w-[260px] animate-in fade-in-0 zoom-in-95 transition-all duration-200 ${getStyles(toast.type)}`}
         >
           {getIcon(toast.type)}
-          <p className="ml-3 text-sm font-medium text-gray-900 flex-1">{toast.message}</p>
+          <p className="ml-3 text-sm font-medium flex-1">{toast.message}</p>
           <button onClick={() => removeToast(toast.id)} className="ml-4 text-gray-400 hover:text-gray-600">
             <X className="h-4 w-4" />
           </button>

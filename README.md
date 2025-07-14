@@ -3,8 +3,8 @@
 ## Introduction
 Nurtura is a modern web application designed to help people track their health, find clinics, access emergency contacts, and receive helpful health tips. It is built to make health management easy, accessible, and user-friendly for everyone.
 
-## Problem Statement
-Many people struggle to keep track of their health symptoms, find reliable clinics, or access emergency contacts quickly. Nurtura solves these problems by providing a single platform where users can log symptoms, get health advice, find clinics, and store emergency contacts, all in one place.
+## Problems Addressed
+Many people struggle to keep track of their health symptoms, find reliable clinics, or access emergency contacts quickly. Nurtura solves these problems by providing a single platform where users can log symptoms, get health advice, find clinics (as in, directly map to the hospital), and store emergency contacts (you can also personally store emergency contacts), all in one place.
 
 ## Main Features
 - **User Authentication**: Register, log in, and manage your profile securely.
@@ -66,8 +66,12 @@ Many people struggle to keep track of their health symptoms, find reliable clini
    ```
 6. Open your browser and go to `http://localhost:3000` to use the app.
 
+
+## Preview of the App (Screenshot)
+
+
 ## License
 This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for details.
 
-## Contact
-If you have any questions or need help, please open an issue in the repository or contact the project maintainer. 
+*** Built with 😍💖 by ART_Redox for the sake of sound wellbeing improvement*** 
+__ Powered by DLT Africa ___

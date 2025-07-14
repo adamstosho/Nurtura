@@ -4,7 +4,7 @@ import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { useAuth } from "../contexts/AuthContext"
 import { useToast } from "../contexts/ToastContext"
-import { Heart, Eye, EyeOff } from "lucide-react"
+import { Eye, EyeOff } from "lucide-react"
 import Button from "../components/Button"
 import Input from "../components/Input"
 import Card, { CardContent } from "../components/Card"
@@ -69,7 +69,7 @@ const Login = () => {
       <div className="max-w-md w-full space-y-8">
         <div className="text-center">
           <div className="flex justify-center">
-            <Heart className="h-12 w-12 text-primary" />
+            <img src="/Nurtura.png" alt="Nurtura Logo" className="h-28 w-28 pb-2" />
           </div>
           <h2 className="mt-6 text-3xl font-bold text-gray-900">Welcome back to HealthPulse</h2>
           <p className="mt-2 text-sm text-gray-600">Sign in to your account to continue tracking your health</p>

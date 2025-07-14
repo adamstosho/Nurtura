@@ -1,6 +1,6 @@
 const Card = ({ children, className = "", ...props }) => {
   return (
-    <div className={`bg-white rounded-2xl shadow-sm border border-gray-100 ${className}`} {...props}>
+    <div className={`bg-card rounded-2xl shadow-card border border-border p-6 ${className}`} {...props}>
       {children}
     </div>
   )
@@ -8,7 +8,7 @@ const Card = ({ children, className = "", ...props }) => {
 
 export const CardHeader = ({ children, className = "", ...props }) => {
   return (
-    <div className={`px-6 py-4 border-b border-gray-100 ${className}`} {...props}>
+    <div className={`px-0 pb-4 border-b border-border mb-2 ${className}`} {...props}>
       {children}
     </div>
   )
@@ -16,7 +16,7 @@ export const CardHeader = ({ children, className = "", ...props }) => {
 
 export const CardContent = ({ children, className = "", ...props }) => {
   return (
-    <div className={`px-6 py-4 ${className}`} {...props}>
+    <div className={`px-0 pt-2 ${className}`} {...props}>
       {children}
     </div>
   )
