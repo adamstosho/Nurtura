@@ -1,0 +1,534 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "HealthPulse API",
+    "version": "1.0.0",
+    "description": "RESTful API documentation for the HealthPulse health tracking application."
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5000/api",
+      "description": "Local server"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "email": { "type": "string", "format": "email" },
+          "region": { "type": "string" }
+        }
+      },
+      "AuthRequest": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": { "type": "string", "format": "email" },
+          "password": { "type": "string", "format": "password" }
+        }
+      },
+      "RegisterRequest": {
+        "type": "object",
+        "required": ["name", "email", "password", "region"],
+        "properties": {
+          "name": { "type": "string" },
+          "email": { "type": "string", "format": "email" },
+          "password": { "type": "string", "format": "password" },
+          "region": { "type": "string" }
+        }
+      },
+      "AuthResponse": {
+        "type": "object",
+        "properties": {
+          "token": { "type": "string" },
+          "user": { "$ref": "#/components/schemas/User" }
+        }
+      },
+      "Symptom": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "userId": { "type": "string" },
+          "symptom": { "type": "string" },
+          "timestamp": { "type": "string", "format": "date-time" }
+        }
+      },
+      "SymptomRequest": {
+        "type": "object",
+        "required": ["symptom"],
+        "properties": {
+          "symptom": { "type": "string" }
+        }
+      },
+      "Clinic": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "address": { "type": "string" },
+          "region": { "type": "string" },
+          "coordinates": {
+            "type": "object",
+            "properties": {
+              "lat": { "type": "number" },
+              "lon": { "type": "number" }
+            }
+          }
+        }
+      },
+      "HealthTip": {
+        "type": "object",
+        "properties": {
+          "title": { "type": "string" },
+          "body": { "type": "string" }
+        }
+      },
+      "EmergencyContact": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "number": { "type": "string" },
+          "type": { "type": "string" },
+          "region": { "type": "string" }
+        }
+      },
+      "EmergencyContactRequest": {
+        "type": "object",
+        "required": ["name", "number", "type", "region"],
+        "properties": {
+          "name": { "type": "string" },
+          "number": { "type": "string" },
+          "type": { "type": "string" },
+          "region": { "type": "string" }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": { "type": "string" }
+        }
+      }
+    }
+  },
+  "security": [
+    { "bearerAuth": [] }
+  ],
+  "paths": {
+    "/auth/register": {
+      "post": {
+        "summary": "Register a new user",
+        "tags": ["Auth"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/RegisterRequest" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User registered",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/AuthResponse" }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error or email already registered",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "summary": "Login a user",
+        "tags": ["Auth"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/AuthRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Login successful",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/AuthResponse" }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid credentials",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/profile": {
+      "get": {
+        "summary": "Get user profile",
+        "tags": ["Auth"],
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "User profile",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "user": { "$ref": "#/components/schemas/User" }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/symptoms": {
+      "post": {
+        "summary": "Log a new symptom",
+        "tags": ["Symptoms"],
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/SymptomRequest" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Symptom logged",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "symptom": { "$ref": "#/components/schemas/Symptom" },
+                    "tips": {
+                      "type": "array",
+                      "items": { "$ref": "#/components/schemas/HealthTip" }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Get all symptoms for user",
+        "tags": ["Symptoms"],
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "List of symptoms",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "symptoms": {
+                      "type": "array",
+                      "items": { "$ref": "#/components/schemas/Symptom" }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/symptoms/history": {
+      "get": {
+        "summary": "Get symptom history (optionally by date range)",
+        "tags": ["Symptoms"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "from",
+            "in": "query",
+            "schema": { "type": "string", "format": "date-time" },
+            "required": false,
+            "description": "Start date"
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "schema": { "type": "string", "format": "date-time" },
+            "required": false,
+            "description": "End date"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of symptoms in date range",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "symptoms": {
+                      "type": "array",
+                      "items": { "$ref": "#/components/schemas/Symptom" }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tips": {
+      "get": {
+        "summary": "Get latest health tips",
+        "tags": ["Health Tips"],
+        "responses": {
+          "200": {
+            "description": "List of health tips",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "tips": {
+                      "type": "array",
+                      "items": { "$ref": "#/components/schemas/HealthTip" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/clinics": {
+      "get": {
+        "summary": "Search for clinics by region or coordinates",
+        "tags": ["Clinics"],
+        "parameters": [
+          {
+            "name": "region",
+            "in": "query",
+            "schema": { "type": "string" },
+            "required": false,
+            "description": "Region name (e.g., Lagos)"
+          },
+          {
+            "name": "city",
+            "in": "query",
+            "schema": { "type": "string" },
+            "required": false,
+            "description": "City name (partial match in address)"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "schema": { "type": "string" },
+            "required": false,
+            "description": "Partial clinic/hospital name"
+          },
+          {
+            "name": "lat",
+            "in": "query",
+            "schema": { "type": "number" },
+            "required": false,
+            "description": "Latitude"
+          },
+          {
+            "name": "lon",
+            "in": "query",
+            "schema": { "type": "number" },
+            "required": false,
+            "description": "Longitude"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of clinics",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "clinics": {
+                      "type": "array",
+                      "items": { "$ref": "#/components/schemas/Clinic" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/emergency": {
+      "get": {
+        "summary": "Get emergency contacts by region or user",
+        "tags": ["Emergency Contacts"],
+        "parameters": [
+          {
+            "name": "region",
+            "in": "query",
+            "schema": { "type": "string" },
+            "required": false,
+            "description": "Region name (e.g., Lagos)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of emergency contacts",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "contacts": {
+                      "type": "array",
+                      "items": { "$ref": "#/components/schemas/EmergencyContact" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Add or update a user's emergency contact",
+        "tags": ["Emergency Contacts"],
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/EmergencyContactRequest" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Contact added/updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "contact": { "$ref": "#/components/schemas/EmergencyContact" }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "summary": "Health check endpoint",
+        "tags": ["Health"],
+        "responses": {
+          "200": {
+            "description": "API is running",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    { "name": "Auth" },
+    { "name": "Symptoms" },
+    { "name": "Health Tips" },
+    { "name": "Clinics" },
+    { "name": "Emergency Contacts" },
+    { "name": "Health" }
+  ]
+}
