@@ -41,6 +41,9 @@ const limiter = rateLimit({
 });
 app.use(limiter);
 
+app.get("/", (req, res) => {
+  res.status(200).json({ message: "Welcome to the API" });
+});
 // Swagger UI setup
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, {
   customCss: '.swagger-ui .topbar { display: none }',
