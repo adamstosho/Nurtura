@@ -7,7 +7,7 @@
   },
   "servers": [
     {
-      "url": "https://nurtura.onrender.com/api",
+      "url": "https://nurtura-rhcz.vercel.app/api",
       "description": "Local server"
     }
   ],
